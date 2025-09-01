@@ -1,0 +1,743 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=GFS+Didot&display=swap');
+/* Applies border-box to everything */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: "Instrument Sans", sans-serif;
+  overflow: auto;
+  
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  }
+  
+
+
+header{
+    
+    background-color: transparent;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 120px;
+    
+}
+
+header .header-wrapper{
+    position: fixed;
+    z-index: 999;
+    
+    background-color: rgba(255, 255, 255, 0.8);
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15px;
+    backdrop-filter: 10px;
+}
+
+nav{
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+nav .nav-wrapper{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-bar{
+    position: fixed;
+    top: 16.5%;
+    max-height: 60vh;
+
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: auto;
+    width: 80%;
+    background-color: rgb(243, 243, 243);
+}
+
+.search-bar .search-wrapper{
+    width: 100%;
+    margin:20px 0;
+}
+
+.head-title h1{
+    font-family: "Didot",serif;
+}
+
+.search-bar .search-wrapper form{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-bar .search-wrapper form input{
+    flex: 0 0 auto!important;
+    width: 50%;
+}
+nav .nav-wrapper ul{
+    width: 100%;
+    height: 100%;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav .nav-wrapper ul li{
+    cursor: pointer;
+    margin-top: 20px;
+    
+}
+
+nav .nav-wrapper ul li a{
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+}
+
+nav .nav-wrapper ul li a::before{
+    content: " ";
+    width: 0;
+    height: 3px;
+    position: absolute;
+    border-radius: 25px;
+    bottom: 0;
+    left: 0;
+    top: 25px;
+    background-color: black;
+    transition: 200ms all;
+}
+nav .nav-wrapper ul li a.active::before{
+   width: 100%;
+   
+}
+nav .nav-wrapper ul li a.active{
+    font-weight: bold;
+}
+.user-icons{
+    width: 11%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-icons .icon-wrapper{
+    cursor: pointer;
+    position: relative;
+}
+.user-icons .icon-wrapper p:not(.logout p){
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70%;
+    color: white;
+    width: 70%;
+    background-color: rgb(43, 43, 43);
+    position: absolute;
+    border-radius: 50%;
+    right: 0;
+    top: 45%;
+
+}
+
+.hero{
+    width: 80%;
+    margin-top: 40px;
+    height: 400px;
+    outline: 2px solid;
+}
+
+.hero .head-title{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #95CBFF;
+}
+
+.hero .head-title div{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    
+}
+
+.hero .hero-img{
+    background-image: url("./assets/averie-woodard-4nulm-JUYFo-unsplash.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+   
+}
+
+.collections{
+    margin-top: 48px;
+    height: 50%;
+    width: 80%;
+}
+
+.collection-wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 52.43px;
+
+}
+
+.collection-wrapper .collection-head{
+    
+    display: flex;
+    gap: 8px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.collection-wrapper .collection-paragraph{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.offers{
+    justify-self: center;
+    margin-top: 64px;
+    padding: 48px;
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
+}
+
+.offer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+}
+
+.subscription{
+    margin-top: 64px;
+    padding: 48px;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.subscription-wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+}
+
+.subscription-wrapper form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.subscription-wrapper form input{
+    width: 60%;
+    padding: 10px;
+}
+.subscription-wrapper button{
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    width: 100%;
+    padding: 12px;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+
+}
+
+footer{
+    margin-top: 4px;
+    width: 100%;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+}
+
+.footer-wrapper{
+    width: 80%;
+    display: flex;
+    gap: 149px;
+}
+
+.footer-content{
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    width: 364px;
+    padding: 20px;
+}
+
+footer ul{
+    list-style: none;
+    color: #838383;
+}
+
+.fotter-company{
+    display: flex;
+    flex-direction: column;
+    gap: 52px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 364px;
+    padding-top: 60px;
+    
+}
+
+.fotter-company ul{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.footer-contact{
+    display: flex;
+    flex-direction: column;
+    gap: 52px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 364px;
+    padding-top: 60px;
+}
+
+.filters{
+    height: 25rem;
+}
+
+.filters-wrapper{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.filters-wrapper form{
+    padding: 20px;
+    border: 2px solid;
+}
+
+.about-container{
+    height: 100%;
+}
+
+.about-content .about-img{
+    background-image: url("https://www.apparelentrepreneurship.com/wp-content/uploads/2019/04/apparel_entrepreneurship_what_your_clothing_brand_needs_to_stay_relevant_2019.jpg");
+    height: 256px;
+    background-position: center;
+    background-size: cover;
+    gap: 36px!important;
+}
+
+.cards .quality{
+    border: solid 1px ;
+}
+.contact-container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.contact-content .contact-img{
+    background-image: url("./assets/pexels-andrew-2312369\(1\).jpg");
+    background-position: center;
+    background-size: cover;
+    height: 300px;
+    width: 30%;
+
+}
+
+.contact-content{
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+}
+
+.login-container{
+    height: 400px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container form{
+    height: 80%;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+    gap: 8px;
+    
+}
+
+.login-container form .form-head h2{
+    font-family: serif;
+    letter-spacing: -2px;
+}
+.product-container{
+    margin: 40px 0;
+    width: 80%;
+   
+}
+.product-imgs{
+    width: 50%;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    
+    height: auto;
+}
+.product-description{
+    height: auto;
+    display: flex;
+    gap: 32px;
+}
+
+
+
+.product-imgs .secondary-imgs{
+    display: flex;
+    flex-direction: column;
+   
+    gap: 16px;
+}
+.product-imgs .secondary-imgs img{
+    flex-basis: 35%;
+    width: 100.2px;
+    cursor: pointer;
+}
+
+.product-imgs .main-img{
+    background-repeat: no-repeat;
+    height: auto;
+    width: 100%;
+    background-position: center;
+    background-size: contain;
+}
+
+.product-container form{
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.product-container form .sizes label{
+    
+    display: inline;
+    text-align: center;
+    padding: 15px;
+    background-color: rgb(241, 241, 241);
+    margin: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.product-container form .sizes input{
+    display: none;
+}
+
+.product-container form .sizes input:checked + label{
+    outline: 2px solid;
+}
+
+.product-container .product-text form button{
+    cursor: pointer;
+    margin-top: 16px;
+    width: 132px;
+    padding: 12px;
+    color: white;
+    background-color: black;
+    border: none;
+}
+
+.review-wrapper{
+    padding: 4px;
+    border: 2px solid;
+    border-radius: 4px;
+    max-height: 16rem;
+    overflow-y: auto;
+}
+
+.reviews .reviews-head{
+    display: flex;
+    align-items: center;
+    
+}
+
+.reviews .reviews-head img{
+    margin-left: 8px;
+}
+
+.reviews-text-wrapper{
+    background-color: rgb(246, 246, 246);
+    border-radius: 4px;
+    display: flex;
+    gap: 16px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.reviews-text-wrapper .review{
+    display: flex;
+    flex-direction: column;
+}
+
+.reviews-text .profile-pic{
+    padding: 10px;
+    width: 40px;
+    text-align: center;
+    color: white;
+    font-weight: 700;
+    height: 40px;
+    background-color: rgb(199, 199, 199);
+    border-radius: 50%;
+}
+
+.reviews-text .review p{
+    
+    justify-self: end;
+    color: black;
+    font-weight: 600;
+    margin: 0;
+}
+
+.reviews form{
+    margin-top: 10px;
+    height: 50px;
+    display: flex;
+    gap: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.reviews form input{
+    width: 80%;
+    height: 100%;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.reviews form button{
+    width: 20%;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    
+    cursor: pointer;
+    
+    padding: 12px;
+    color: white;
+    background-color: black;
+    border: none;
+}
+
+.cart-text .size{
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    background-color: rgb(220, 220, 220);
+}
+.cart-total{
+    flex-direction: column;
+
+}
+.cart-payement a{
+    align-self: flex-end;
+}
+
+.cart-payement a button{
+    border: none;
+    padding: 12px 24px;
+    background-color: black;
+    color: white;
+}
+
+.payement-container{
+    margin: 64px 0;
+    width: 80%;
+    align-items: center;
+    
+}
+
+.payement-container .cart-payement{
+    margin-top: 0!important;
+    width: 100%!important;
+}
+
+.payement-container form{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.payement-container form .name{
+    gap: 4px;
+}
+
+.payement-container form .location{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 4px;
+    grid-template-rows: repeat(2,1fr);
+}
+
+.payement-method .pay input{
+    display: none;
+}
+
+.payement-method {
+    display: flex;
+    gap: 12px;
+    width: 150%;
+}
+
+.payement-method .pay label{
+    padding: 8px 32px;
+    border: solid 1px rgb(175, 175, 175);
+    display: flex;
+    cursor: pointer;
+    gap: 8px;
+    align-items: center;
+   
+    
+}
+
+.payement-method .pay label .choosen{
+    width: 10px;
+    height: 10px;
+    background-color: rgb(10, 206, 10);
+    border-radius: 50%;
+    visibility: hidden;
+}
+.payement-method .pay input:checked + label .choosen{
+    visibility: visible;
+}
+
+.payement-container form button{
+    padding: 12px;
+    width: 50%;
+    background-color: black;
+    color: white;
+    border: none;
+    align-self: flex-end;
+    margin-top: 24px;
+
+}
+
+.suggestions{
+    overflow: auto;
+    z-index: 999;
+}
+.suggestions .suggestions-wrapper div{
+    font-size: 17px;
+    padding: 10px;
+    height: 50px;
+    border-radius: 6px;
+    
+}
+.suggestions .suggestions-wrapper div:hover{
+    transition: all 0.3s ease;
+    
+    background-color: #f1f1f1;
+
+    
+}
+
+
+.logout{
+    width: 120px;
+    background-color: whitesmoke;
+    position: fixed;
+    right: 12%;
+    top: 12%;
+    display: flex;
+    flex-direction: row;
+    padding: 8px 12px;
+    gap: 8px;
+    align-items: center;
+    border-radius: 6px;
+    opacity: 0;
+    cursor: pointer;
+   
+}
+
+.logout p{
+    align-self: center;
+    margin: 0;
+    background-color: transparent;
+    font-weight: bold;
+    
+}
+
+.triangle{
+    position: fixed;
+      width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 10px solid whitesmoke;
+  left: 83.8%;
+  top: 11%;
+  opacity: 0;
+
+}
+
+.user-avatar:hover ~ div{
+     transition: all 0.5s ease;
+    opacity: 1;
+    
+}
+
+
+
+.user-avatar ~ div:hover {
+    opacity: 1;
+}
+
+.logout:active{
+    background-color: #ebebeb;
+}
+
+
+
+
+
+
+
