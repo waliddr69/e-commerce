@@ -28,6 +28,7 @@ const Signup:React.FC = ()=>{
             if(res.success){
                 console.log(res)
                 setColor("green")
+                history.push("/login")
                 
             }else{
                 console.log(res.message)
