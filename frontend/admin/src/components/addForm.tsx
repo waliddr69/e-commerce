@@ -49,8 +49,9 @@ const AddForm: React.FC = () => {
 
   
 
-  const HandleSubmit = async(e:React.FormEvent)=>{
+  const HandleSubmit = async(e:React.FormEvent<HTMLFormElement>)=>{
     e.preventDefault();
+    const form = e.currentTarget
 
     const formData = new FormData();
 
@@ -90,7 +91,7 @@ const AddForm: React.FC = () => {
       if(res.success){
         console.log("added")
         setStyle("green")
-        
+        form.reset()
       }else{
         console.log("not added")
         console.log(res.body)
