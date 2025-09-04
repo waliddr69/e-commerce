@@ -1,10 +1,10 @@
-import { useEffect } from "react"
+import { useContext, useEffect } from "react"
 import { supabase } from "../supabaseClient"
 import { useHistory } from "react-router-dom"
-
+import { AuthContext } from "../AuthContext"
 const AuthCallback = () => {
   const history = useHistory()
-
+  const auth = useContext(AuthContext)
   useEffect(() => {
     const handleAuth = async () => {
       const { data, error } = await supabase.auth.getSession()
@@ -34,7 +34,7 @@ const AuthCallback = () => {
             history.push("/home")
         
       }
-
+      auth?.refreshUser()
       
     }
 
