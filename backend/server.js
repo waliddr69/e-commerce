@@ -10,6 +10,9 @@ const cookie = require("cookie-parser")
 const errorHandler = require("./middleware/errorHandler")
 const app = express()
 
+
+
+
 db()
 app.use(cookie())
 app.use(cors({

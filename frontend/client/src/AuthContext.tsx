@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       credentials: "include",
     })
       const res = await req.json()
-      
+        console.log(res)
         if (res.success) {
           setName(res.name);
           setAvatar(res.avatar);

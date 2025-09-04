@@ -16,7 +16,13 @@ const userSchema = mongo.Schema({
   },
   password: {
     type: String,
-    required: true,
+    required: ()=>{
+      return this.supabaseId === null
+    },
+  },
+  supabaseId:{
+    type:String,
+    default:null
   },
   role: {
     type: String,

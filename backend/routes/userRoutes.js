@@ -10,4 +10,5 @@ router.route("/me").get(validateToken,getUser)
 router.route("/login").post(loginUser);
 router.route("/logout").get(require("../middleware/validateTokenHandler"),handleLogout);
 
+
 module.exports = router;

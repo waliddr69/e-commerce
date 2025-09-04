@@ -26,6 +26,7 @@ import { useHistory } from "react-router-dom";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import PrivateRoute from "./auth/PrivateRoute";
+import AuthCallback from "./auth/callback";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY!);
 const PaymentWrapper = () => (
@@ -132,7 +133,7 @@ const handleLogout = async()=>{
 }
     
 
-    
+   console.log(auth?.avatar) 
 
     
 
@@ -261,6 +262,7 @@ const handleLogout = async()=>{
                 <Route exact path={"/"} component={Homepage}/>
                 <Route exact path={"/home"} component={Homepage}/>
                 <Route exact path={"/collection"} component={Collectionpage}/>
+                <Route exact path={"/auth/callback"} component={AuthCallback}/>
                 <Route exact path={"/about"} component={AboutusPage}/>
                 <Route exact path={"/contact"} component={Contactpage}/>
                 <Route exact path="/login" render={() => (

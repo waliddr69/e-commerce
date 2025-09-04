@@ -1,11 +1,70 @@
 const asyncHandler = require("express-async-handler")
-
-const joi = require("joi")
 const User = require("../models/userModel")
-const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 
+function getSupabaseSecret() {
+  
+  return process.env.JWT_SUPABASE;
+}
+
+async function verifySupabaseToken(token) {
+ 
+
+  try {
+    const  payload  =  jwt.verify(token, getSupabaseSecret(),{
+        algorithms:["HS256"]
+    });
+    return payload;
+  } catch (err) {
+    console.error("Invalid Supabase JWT:", err.message);
+    return null;
+  }
+}
+
 const registerUser = asyncHandler(async(req,res)=>{
+    if(req.body.way && req.body.way === "supabase"){
+        const supatoken = req.headers.authorization?.split(" ")[1]
+        console.log("supabase",supatoken)
+        
+        const payload = await verifySupabaseToken(supatoken)
+        
+        if(payload){
+            
+        
+            let user = await User.findOne({ email:payload.email,supabaseId:payload.sub })
+
+
+  if (!user) {
+    user = await User.create({
+      username: payload.user_metadata?.full_name,
+      email: payload.email,
+      avatar: payload.user_metadata?.avatar_url,
+      supabaseId: payload.sub, 
+    })
+    
+  }
+    const token = jwt.sign({
+        userId:user._id,
+        email:payload.email,
+        role:"user",
+    },process.env.JWT_SECRET,{expiresIn:"7d"});
+    res.cookie("token",token,{
+        httpOnly:true,
+        sameSite:"strict",
+        maxAge:7*24*60*60*1000
+
+    })
+    return res.json({success:true,message:"logged in"})
+  
+
+  
+        
+        }else{
+            return res.status(401).json({success:false,message:"invalid token"})
+        }
+        
+        
+    }
     let {name,email,pass,role} = req.body
     
     if(!role&&(name.trim() ===""||email.trim()===""||pass.trim()==="")){
@@ -67,6 +126,7 @@ const registerUser = asyncHandler(async(req,res)=>{
 
 const loginUser = asyncHandler(async(req,res)=>{
     const {email,pass,role} = req.body
+    
     console.log(email,pass,role)
     if(email.trim() ===""||pass.trim()===""){
         res.status(400).json({success:false,message:"All fields are mandatory"})
@@ -77,6 +137,9 @@ const loginUser = asyncHandler(async(req,res)=>{
     if(!user){
         res.status(400).json({success:false,message:"User does not exist"})
 
+    }
+    if(user.password === undefined){
+        res.status(400).json({success:false,message:"You Signed up with Google, Log in with Google"})
     }
     const match = await bcrypt.compare(pass,user.password)
     if(!match){
@@ -125,4 +188,10 @@ const handleLogout = asyncHandler(async(req,res)=>{
     
 })
 
-module.exports = {registerUser,loginUser,getUser,handleLogout}
+
+
+
+
+module.exports = { registerUser, loginUser, getUser, handleLogout };
+
+

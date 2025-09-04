@@ -391,8 +391,10 @@ footer ul{
     height: 400px;
     width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 50px;
 }
 
 .login-container form{
