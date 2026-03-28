@@ -1,6 +1,8 @@
 const asyncHandler = require("express-async-handler")
 const User = require("../models/userModel")
 const jwt = require("jsonwebtoken")
+const Joi = require("joi")
+const bcrypt = require("bcrypt");
 
 function getSupabaseSecret() {
   
@@ -82,9 +84,9 @@ const registerUser = asyncHandler(async(req,res)=>{
 
     
 
-     const schema = joi.object().keys({
-        email:joi.string().trim().email().required(),
-        pass:joi.string().min(5).max(12).required()
+     const schema = Joi.object().keys({
+        email:Joi.string().trim().email().required(),
+        pass:Joi.string().min(5).max(12).required()
     });
 
     const {error} = schema.validate({email,pass})

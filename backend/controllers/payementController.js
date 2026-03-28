@@ -57,6 +57,7 @@ res.json({response:response.data,checkout_url:response.data.checkout_url,gateway
 
 
 }
+
 if(method === "COD"){
     res.json({gateway:"COD"})
 }

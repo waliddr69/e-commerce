@@ -32,9 +32,45 @@ const ProductPage: React.FC<RouteComponentProps<params>> = ({ match }) => {
     const [img2,setimg2] = useState<string | undefined>(undefined)
     const [img3,setimg3] = useState<string | undefined>(undefined)
     const [img4,setimg4] = useState<string | undefined>(undefined)
+    const [s,setS] = useState(0)
     
     const reviewsRef = useRef<HTMLDivElement | null>(null);
     const [numRev,setNumRev] = useState(0)
+
+    useEffect(()=>{
+
+        if(s>10) return;
+        const i = setInterval(() => {
+            setS(prev => prev + 1);
+        }, 1000);
+        if(s>10){
+           clearInterval(i) 
+        }
+        
+
+        return ()=>clearInterval(i)
+    },[s])
+
+    const added = useRef(false)
+
+    async function addClick(){
+        await fetch(process.env.REACT_APP_API_PROFILE_URL + "/addProfile", {
+            method: "POST",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ productId: match.params.id,eventType:"click" }),
+        })
+        
+    }
+
+    useEffect(()=>{
+        if(s>10 && !added.current){
+            addClick()
+            added.current = true
+        }
+    },[s])
+
+
     useEffect(() => {
   if (reviewsRef.current) {
     reviewsRef.current.scrollTo({ top: 0, behavior: "smooth" });
@@ -87,10 +123,10 @@ const ProductPage: React.FC<RouteComponentProps<params>> = ({ match }) => {
             .then(res=>{
                 console.log(res)
                 if(res.success){
-                    console.log(res.cart)
+                    
                     card?.refreshItems()
                 }else{
-                    console.log(res.message,res.id)
+                    
                 }
             })
             .catch(err=>console.log(err))
@@ -101,7 +137,7 @@ const getReviews = ()=>{
             fetch(process.env.REACT_APP_API_REVIEW_URL as string+"?productId="+match.params.id)
         .then(res=>res.json())
         .then(res=>{
-            console.log(res)
+            
             setReviews(res.reviews)
             setNumRev(res.num)
 
@@ -147,15 +183,7 @@ const getReviews = ()=>{
         getReviews()
     },[])
 
-    console.log(reviews)
-    
-
-    
-    
-
-    
-
-    
+  
     return(
         <div className="product-container mt-5">
             {col != null ? (

@@ -3,6 +3,7 @@ const asyncHandler = require("express-async-handler");
 const Order = require("../models/orderModel")
 const {verifySignature } = require("@chargily/chargily-pay")
 const Cart = require("../models/cartModel")
+const Profile = require("../models/profileModel")
 const webhook = asyncHandler(async(req,res)=>{
     
     const signature = req.get("signature");
@@ -29,7 +30,12 @@ const webhook = asyncHandler(async(req,res)=>{
             price:event.data.amount,
 
         })
-
+        await Profile.create({
+            userId:event.data.metadata.userId,
+            eventType:"purchase",
+            order:order._id,
+            productId:order.products.map(p=>p.productId)
+        })
          await Cart.updateOne({
             userId:event.data.metadata.userId,
             products:JSON.parse(event.data.metadata.products)

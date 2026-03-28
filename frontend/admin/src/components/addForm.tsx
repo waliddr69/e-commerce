@@ -32,13 +32,13 @@ const AddForm: React.FC = () => {
   const [id,setId] = useState<string>("")
       useEffect(() => {
     if (responseMess !== "") {
-      // Reset class to visible each time
+      
       setId("message");
 
       const timer = setTimeout(() => {
-        setId("message inactive"); // add fade-out class
-        // If you want it fully disappear, clear message after fade
-        setTimeout(() => setResponse(""), 500); // match CSS transition duration
+        setId("message inactive"); 
+   
+        setTimeout(() => setResponse(""), 500); 
       }, 3000);
 
       return () => clearTimeout(timer);
@@ -55,7 +55,7 @@ const AddForm: React.FC = () => {
 
     const formData = new FormData();
 
-  // Append text fields
+  
   formData.append("name", name);
   formData.append("description", description);
   formData.append("category", category);
@@ -64,7 +64,7 @@ const AddForm: React.FC = () => {
   formData.append("bestseller", bestSeller.toString());
   size.forEach((s) => formData.append("sizes[]", s));
 
-    // Files
+    
   ["img1", "img2", "img3", "img4"].forEach((key) => {
   const input = document.getElementById(key) as HTMLInputElement;
   if (input?.files?.[0]) {

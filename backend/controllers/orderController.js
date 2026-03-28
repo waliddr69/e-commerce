@@ -2,13 +2,14 @@ const asyncHandler = require("express-async-handler");
 
 const Order = require("../models/orderModel")
 const Cart = require("../models/cartModel")
+const Profile = require("../models/profileModel")
 
 const addOrder = asyncHandler(async(req,res)=>{
     const {cartId,fname,lname,email,street,city,state,country,zipcode,phone,method,price,products} = req.body;
     
     const userId = req.user.userId;
     const items = products.reduce((sum,q)=>sum+q.quantity,0)
-    console.log(fname,lname,email,street,city,state,country,zipcode,phone,method,price,products,userId)
+   
     const order = await Order.create({
         userId,
         products,
@@ -25,7 +26,14 @@ const addOrder = asyncHandler(async(req,res)=>{
         items,
         price
     })
-    console.log(cartId)
+    for(let i=0;i<products.length;i++){
+        await Profile.create({
+               userId:req.user.userId,
+               eventType:"purchase",
+               productId:order.products[i].productId
+        })
+    }
+   
     const cart = await Cart.findByIdAndUpdate(
         cartId,
         {$set:{"products.$[].isOrdered":true}},

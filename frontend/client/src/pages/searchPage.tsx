@@ -19,7 +19,14 @@ const SearchPage:React.FC = ()=>{
                     }else{
                         setResult(null)
                     }
-                    console.log(results)
+                  
+                })
+
+                fetch(process.env.REACT_APP_API_PROFILE_URL + "/addProfile", {
+                    method: "POST",
+                    credentials: "include",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ eventType: "search", query: q }),
                 })
         }
     },[q])

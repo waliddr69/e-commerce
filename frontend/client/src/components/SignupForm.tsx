@@ -40,6 +40,7 @@ const Signup: React.FC = () => {
     })
       .then((res) => res.json())
       .then((res) => {
+        console.log(res)
         if (res.success) {
           setColor("green")
           setMessage("User registered successfully!")

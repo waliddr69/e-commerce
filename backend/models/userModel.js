@@ -32,6 +32,7 @@ const userSchema = mongo.Schema({
   avatar: {
     type: String,
   },
+  region:String
 }, { timestamps: true });
 
 module.exports =  mongo.model("User", userSchema);

@@ -32,6 +32,7 @@ app.use("/v1/api/cart",require("./middleware/validateTokenHandler"),require("./r
 app.use("/v1/api/pay",require("./middleware/validateTokenHandler"),require("./routes/payementRoutes"))
 app.use("/v1/api/orders",require("./middleware/validateTokenHandler"),require("./routes/orderRoute"))
 app.use("/v1/api/reviews",require("./routes/reviewRoutes"))
+app.use("/v1/api/profile",require("./routes/profileRoutes"))
 
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
