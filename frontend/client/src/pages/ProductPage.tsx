@@ -32,43 +32,31 @@ const ProductPage: React.FC<RouteComponentProps<params>> = ({ match }) => {
     const [img2,setimg2] = useState<string | undefined>(undefined)
     const [img3,setimg3] = useState<string | undefined>(undefined)
     const [img4,setimg4] = useState<string | undefined>(undefined)
-    const [s,setS] = useState(0)
+    const sRef = useRef(0)
     
     const reviewsRef = useRef<HTMLDivElement | null>(null);
     const [numRev,setNumRev] = useState(0)
 
     useEffect(()=>{
 
-        if(s>10) return;
+        
         const i = setInterval(() => {
-            setS(prev => prev + 1);
+            sRef.current += 1;
         }, 1000);
-        if(s>10){
-           clearInterval(i) 
-        }
+        
         
 
-        return ()=>clearInterval(i)
-    },[s])
-
-    const added = useRef(false)
-
-    async function addClick(){
-        await fetch(process.env.REACT_APP_API_PROFILE_URL + "/addProfile", {
-            method: "POST",
-            credentials: "include",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ productId: match.params.id,eventType:"click" }),
-        })
-        
-    }
-
-    useEffect(()=>{
-        if(s>10 && !added.current){
-            addClick()
-            added.current = true
+        return ()=>{
+            clearInterval(i)
+            fetch(process.env.REACT_APP_API_PROFILE_URL + "/addProfile", {
+                method: "POST",
+                credentials: "include",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ productId: match.params.id,eventType:"click",timeSpent:sRef.current }),
+            })
         }
-    },[s])
+    },[])
+
 
 
     useEffect(() => {

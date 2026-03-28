@@ -6,12 +6,13 @@ const Profile = require("../models/profileModel");
 
 
 const addProfile = asyncHandler(async(req,res)=>{
-  const {eventType,query,order,productId} = req.body;
+  const {eventType,query,order,productId,timeSpent} = req.body;
     const profile = await Profile.create({
         userId:req.user.userId,
         eventType,
         query,
         order,
+        timeSpent,
         productId
     })
     if(profile){

@@ -18,6 +18,7 @@ const profileSchema = mongo.Schema(
     query: {
       type: String,
     },
+    timeSpent:Number,
   },
   {
     timestamps: true,
