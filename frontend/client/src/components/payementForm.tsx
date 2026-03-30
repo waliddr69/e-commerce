@@ -6,6 +6,8 @@ import { useContext, useState } from "react"
 import { CardContext } from "../cardContext"
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import { useHistory } from "react-router-dom"
+import { useWS } from "../webSocketContext"
+import { AuthContext } from "../AuthContext"
 
 const PayementForm:React.FC = ()=>{
 const [message,setMessage] = useState("")
@@ -15,7 +17,8 @@ const elements = useElements();
 const history = useHistory()
 const [style,setstyle] = useState("red")
 const [method,setmethod] = useState("")
-
+const {id} = useContext(AuthContext) as any
+const ws = useWS()
     const handleSubmit = async(e:React.FormEvent)=>{
         
         if(!stripe || !elements){
@@ -96,6 +99,9 @@ const [method,setmethod] = useState("")
         if ((paymentIntent && paymentIntent.status==="succeeded")||res.gateway === "COD") {
             setMessage(" Payment successful!,Redirecting...");
             setstyle("green");
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                ws.send(JSON.stringify({ clientId:id,eventType: "purchase",productId:cart?.products.map((p:any)=>p.productId) }))
+            }
             try {
 
                 const req = await fetch(process.env.REACT_APP_API_ORDER_URL + "/add", {

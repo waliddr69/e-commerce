@@ -7,6 +7,7 @@ import line from "../assets/minus-horizontal-straight-line.png"
 import CollectionCard from "../components/collectionCard";
 import { AuthContext } from "../AuthContext";
 import React from "react";
+import { useWS } from "../webSocketContext";
 
 type params = {id:string}
 interface Review  {
@@ -22,6 +23,10 @@ interface Review  {
 }
 
 const ProductPage: React.FC<RouteComponentProps<params>> = ({ match }) => {
+
+    const ws = useWS()
+    const {id} = useContext(AuthContext) as any
+   
     const [col,setcol] = useState<Product|null>(null)
     const auth = useContext(AuthContext)
     const [content,setContent] = useState("")
@@ -38,16 +43,22 @@ const ProductPage: React.FC<RouteComponentProps<params>> = ({ match }) => {
     const [numRev,setNumRev] = useState(0)
 
     useEffect(()=>{
-
-        
+        if (!id || !ws) return;
+       
         const i = setInterval(() => {
             sRef.current += 1;
         }, 1000);
+
+      
         
         
 
         return ()=>{
             clearInterval(i)
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                ws.send(JSON.stringify({ clientId:id, productId: match.params.id,eventType:"click",timeSpent:sRef.current }))
+            }
+            
             fetch(process.env.REACT_APP_API_PROFILE_URL + "/addProfile", {
                 method: "POST",
                 credentials: "include",
@@ -55,7 +66,9 @@ const ProductPage: React.FC<RouteComponentProps<params>> = ({ match }) => {
                 body: JSON.stringify({ productId: match.params.id,eventType:"click",timeSpent:sRef.current }),
             })
         }
-    },[])
+        
+        
+    },[match.params.id,ws,id])
 
 
 

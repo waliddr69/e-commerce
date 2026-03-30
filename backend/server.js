@@ -7,6 +7,7 @@ const bodyParser = require("body-parser")
 const path = require("path")
 const db = require("./config/dbConn")
 const cookie = require("cookie-parser")
+
 const errorHandler = require("./middleware/errorHandler")
 const app = express()
 
@@ -19,6 +20,7 @@ app.use(cors({
   origin: [process.env.FRONTEND_URL,process.env.ADMIN_URL],
   credentials: true 
 }));
+
 
 app.use("/webhook",bodyParser.json({
   verify: (req, res, buf) => {
@@ -36,6 +38,7 @@ app.use("/v1/api/profile",require("./routes/profileRoutes"))
 
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 
 app.use(errorHandler)
 const port = process.env.PORT ?? 5001

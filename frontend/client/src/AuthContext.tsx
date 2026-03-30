@@ -5,6 +5,7 @@ type AuthContextType = {
   setLoading:React.Dispatch<React.SetStateAction<boolean>>
   name: string | null;
   avatar: string | null;
+  id: string | null;
   setName: React.Dispatch<React.SetStateAction<string | null>>;
   setAvatar: React.Dispatch<React.SetStateAction<string | null>>;
   refreshUser: () => void;  
@@ -15,6 +16,7 @@ export const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading,setLoading] = useState(false)
   const [name, setName] = useState<string | null>(null);
+  const [id, setId] = useState<string | null>(null);
   const [avatar, setAvatar] = useState<string | null>(null);
 
   const refreshUser = async() => {
@@ -26,6 +28,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         console.log(res)
         if (res.success) {
           setName(res.name);
+          setId(res.id);
           setAvatar(res.avatar);
         } else {
           setName(null);
@@ -47,7 +50,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ name, avatar,loading,setLoading, setName, setAvatar, refreshUser }}>
+    <AuthContext.Provider value={{ name, avatar,id,loading,setLoading, setName, setAvatar, refreshUser }}>
       {children}
     </AuthContext.Provider>
   );

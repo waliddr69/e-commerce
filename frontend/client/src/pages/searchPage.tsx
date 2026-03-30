@@ -1,14 +1,19 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom"
 import { Product } from "../models/Collection";
 import CollectionCard from "../components/collectionCard";
+import { AuthContext } from "../AuthContext";
+import { useWS } from "../webSocketContext";
 
 const SearchPage:React.FC = ()=>{
 
     const query = new URLSearchParams(useLocation().search)
+    const {id} = useContext(AuthContext) as any
+    const ws = useWS()
     const [results,setResult] = useState<Product[] | null>(null)
     const q = query.get("q")||"";
     useEffect(()=>{
+        if(!id || !ws) return;
         if(q){
                 fetch("http://localhost:5000/v1/api/products/search?q="+q)
                 .then(res=>res.json())
@@ -21,15 +26,20 @@ const SearchPage:React.FC = ()=>{
                     }
                   
                 })
-
-                fetch(process.env.REACT_APP_API_PROFILE_URL + "/addProfile", {
+                return ()=>{
+                    if (ws && ws.readyState === WebSocket.OPEN) {
+                        ws.send(JSON.stringify({ clientId:id,eventType: "search", query: q }))
+                    }
+                    fetch(process.env.REACT_APP_API_PROFILE_URL + "/addProfile", {
                     method: "POST",
                     credentials: "include",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ eventType: "search", query: q }),
                 })
+                }
+                
         }
-    },[q])
+    },[q,id,ws])
     
     return(
         <>

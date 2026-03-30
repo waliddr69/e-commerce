@@ -7,13 +7,17 @@ import { BrowserRouter as Router } from 'react-router-dom'; // This wraps the en
 import App from './App';
 import { AuthProvider } from './AuthContext';
 import { CardProvider } from './cardContext';
+import { WSProvider } from './webSocketContext';
 
 ReactDOM.render(
   <Router>
     <AuthProvider>
-      <CardProvider>
-        <App />
-      </CardProvider>
+      <WSProvider>
+        <CardProvider>
+          <App />
+        </CardProvider>
+      </WSProvider>
+      
       
     </AuthProvider>
     

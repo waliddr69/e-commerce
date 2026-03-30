@@ -172,7 +172,7 @@ const getUser = asyncHandler(async(req,res)=>{
         res.status(404).json({success:false,message:"User not found"})
         
     }
-    res.json({success:true,name:user.username,avatar:user.avatar})
+    res.json({success:true,name:user.username,avatar:user.avatar,id:user._id})
 })
 
 const handleLogout = asyncHandler(async(req,res)=>{

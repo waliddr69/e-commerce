@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, ReactNode } from "react";
-import { Product } from "./models/Collection";
+
 
 type CardContextType = {
   items:number;
