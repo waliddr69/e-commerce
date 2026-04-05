@@ -1,5 +1,5 @@
 const express = require("express")
-const {addProduct,getProducts,deleteProduct,getLatest,getBestSeller,handleFilter,handleSearch,getProduct,getRealted} = require("../controllers/productController")
+const {addProduct,getProducts,deleteProduct,getLatest,getBestSeller,handleFilter,handleSearch,getProduct,getRealted, getRec} = require("../controllers/productController")
 const upload = require("../middleware/uploadHandler")
 const router = express.Router()
 
@@ -14,6 +14,7 @@ router.route("/add").post(
 router.route("/").get(getProducts)
 router.route("/latest").get(getLatest)
 router.route("/bestseller").get(getBestSeller)
+router.route("/getRec").post(getRec)
 router.route("/search").get(handleSearch)
 router.route("/filter").post(handleFilter)
 router.route("/related").get(getRealted)

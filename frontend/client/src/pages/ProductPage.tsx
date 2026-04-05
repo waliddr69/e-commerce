@@ -24,7 +24,7 @@ interface Review  {
 
 const ProductPage: React.FC<RouteComponentProps<params>> = ({ match }) => {
 
-    const ws = useWS()
+    const {ws} = useWS() as any
     const {id} = useContext(AuthContext) as any
    
     const [col,setcol] = useState<Product|null>(null)

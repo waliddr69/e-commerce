@@ -27,6 +27,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import PrivateRoute from "./auth/PrivateRoute";
 import AuthCallback from "./auth/callback";
+import RecommendPage from "./pages/RecommendPage";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY!);
 const PaymentWrapper = () => (
@@ -158,8 +159,10 @@ const handleLogout = async()=>{
                             <li><NavLink to={"/collection"} activeClassName="active"  >
                                 COLLECTION
                             </NavLink></li>
+                            {auth?.avatar && (<li><NavLink to={"/recommendations"} activeClassName="active" >RECOMMENDATIONS</NavLink></li>)}
                             <li><NavLink to={"/about"} activeClassName="active" >ABOUT</NavLink></li>
                             <li><NavLink to={"/contact"} activeClassName="active" >CONTACT</NavLink></li>
+                            
                             
                             
                         </ul>
@@ -262,6 +265,7 @@ const handleLogout = async()=>{
                 <Route exact path={"/"} component={Homepage}/>
                 <Route exact path={"/home"} component={Homepage}/>
                 <Route exact path={"/collection"} component={Collectionpage}/>
+                <Route exact path={"/recommendations"} component={RecommendPage}/>
                 <Route exact path={"/auth/callback"} component={AuthCallback}/>
                 <Route exact path={"/about"} component={AboutusPage}/>
                 <Route exact path={"/contact"} component={Contactpage}/>

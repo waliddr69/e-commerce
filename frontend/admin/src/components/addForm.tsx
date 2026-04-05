@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
+import { useWS } from "../webSocketContext";
 
 const AddForm: React.FC = () => {
 
@@ -47,9 +48,10 @@ const AddForm: React.FC = () => {
 
    
 
-  
+  const ws = useWS()
 
   const HandleSubmit = async(e:React.FormEvent<HTMLFormElement>)=>{
+    if(!ws) return;
     e.preventDefault();
     const form = e.currentTarget
 
@@ -89,8 +91,17 @@ const AddForm: React.FC = () => {
       console.log("Full response:", res);
 
       if(res.success){
-        console.log("added")
+        ws?.send(JSON.stringify({
+          eventType:"new_product",
+          id:res.product._id,
+          name:formData.get("name") as string,
+          category:formData.get("category") as string,
+          subCategory:formData.get("subCategory") as string,
+          price:formData.get("price") as string,
+          description:formData.get("description") as string,
+        }))
         setStyle("green")
+        
         form.reset()
       }else{
         console.log("not added")

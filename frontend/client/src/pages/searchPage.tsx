@@ -9,7 +9,7 @@ const SearchPage:React.FC = ()=>{
 
     const query = new URLSearchParams(useLocation().search)
     const {id} = useContext(AuthContext) as any
-    const ws = useWS()
+    const {ws} = useWS() as any
     const [results,setResult] = useState<Product[] | null>(null)
     const q = query.get("q")||"";
     useEffect(()=>{
@@ -20,14 +20,7 @@ const SearchPage:React.FC = ()=>{
                 .then(res=>{
                     if(res.search.length>0){
                         setResult(res.search)
-                        
-                    }else{
-                        setResult(null)
-                    }
-                  
-                })
-                return ()=>{
-                    if (ws && ws.readyState === WebSocket.OPEN) {
+                        if (ws && ws.readyState === WebSocket.OPEN) {
                         ws.send(JSON.stringify({ clientId:id,eventType: "search", query: q }))
                     }
                     fetch(process.env.REACT_APP_API_PROFILE_URL + "/addProfile", {
@@ -36,7 +29,15 @@ const SearchPage:React.FC = ()=>{
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ eventType: "search", query: q }),
                 })
-                }
+                        
+                    }else{
+                        setResult(null)
+                    }
+                  
+                })
+                
+                    
+                
                 
         }
     },[q,id,ws])

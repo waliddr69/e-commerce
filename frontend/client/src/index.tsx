@@ -8,13 +8,18 @@ import App from './App';
 import { AuthProvider } from './AuthContext';
 import { CardProvider } from './cardContext';
 import { WSProvider } from './webSocketContext';
+import Notif from './components/notification';
 
 ReactDOM.render(
   <Router>
     <AuthProvider>
       <WSProvider>
         <CardProvider>
-          <App />
+          
+            <App />
+            <Notif/>
+          
+          
         </CardProvider>
       </WSProvider>
       

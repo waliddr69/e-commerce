@@ -1,0 +1,15 @@
+.show{
+    transform: translateX(-50%);
+    animation: fade-in 0.1s ease-out;
+}
+
+@keyframes fade-in {
+    0% {
+        transform: translateY(-100%);
+        
+    }
+    100%{
+        transform: translateY(0);
+    }
+    
+}

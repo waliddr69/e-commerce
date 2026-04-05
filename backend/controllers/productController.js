@@ -159,6 +159,21 @@ const getRealted = asyncHandler(async(req,res)=>{
   res.json({success:true,product})
 })
 
+const getRec = asyncHandler(async(req,res)=>{
+  const {clicks,searches,purchases} = req.body
+  const products = await Promise.all([
+    Product.find({_id:{$in:clicks}}),
+    Product.find({_id:{$in:searches}}),
+    Product.find({_id:{$in:purchases}}),
+
+  ]
+    
+  )
+  
+  
+  res.json({success:true,clicks:products[0],searches:products[1],purchases:products[2]})
+})
 
 
-module.exports = {addProduct,getProducts,deleteProduct,getLatest,getBestSeller,handleFilter,handleSearch,getProduct,getRealted}
+
+module.exports = {addProduct,getProducts,getRec,deleteProduct,getLatest,getBestSeller,handleFilter,handleSearch,getProduct,getRealted}

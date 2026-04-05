@@ -18,7 +18,7 @@ const history = useHistory()
 const [style,setstyle] = useState("red")
 const [method,setmethod] = useState("")
 const {id} = useContext(AuthContext) as any
-const ws = useWS()
+const {ws} = useWS() as any
     const handleSubmit = async(e:React.FormEvent)=>{
         
         if(!stripe || !elements){
