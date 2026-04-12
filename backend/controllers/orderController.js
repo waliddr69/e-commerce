@@ -53,7 +53,7 @@ const getOrder = asyncHandler(async(req,res)=>{
 })
 
 const getOrders = asyncHandler(async(req,res)=>{
-    const orders = await Order.find().populate("products.productId")
+    const orders = await Order.find().populate("products.productId").populate("userId")
     res.json({orders})
 })
 

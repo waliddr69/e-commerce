@@ -1,0 +1,42 @@
+h2{
+    font-weight: bold;
+}
+.cards, .cards .card, .body{
+    display: flex;
+}
+
+.cards{
+    gap: 20px;
+}
+
+.body{
+    align-items: center;
+    gap: 8px;
+}
+.cards .card{
+    display: flex;
+    padding: 16px;
+    border: 2px black solid;
+    gap: 16px;
+    width: 40%;
+}
+
+.ico{
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    background-color: rgb(235, 235, 235);
+
+}
+.card .head{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+}
+
+.charts{
+    display: flex;
+}
