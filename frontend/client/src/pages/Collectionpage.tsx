@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import type { Product } from "../models/Collection"
 
 import line from "../assets/minus-horizontal-straight-line.png"
 import CollectionCard from "../components/collectionCard"
+import { AuthContext } from "../AuthContext"
 const Collectionpage:React.FC=()=>{
     const [collections,setCollection] = useState<Product[] | null>(null)
 
-    
+        const {discount} = useContext(AuthContext) as any
         const [men,setMen] = useState("")
         const [women,setWomen] = useState("")
         const [kids,setKid] = useState("")
@@ -30,8 +31,8 @@ const Collectionpage:React.FC=()=>{
 
         const getProducts = ()=>{
             fetch(process.env.REACT_APP_API_PRODUCT_URL as string+"?limit="+limitpro)
-        .then(res=>res.json())
-        .then(res=>{
+            .then(res=>res.json())
+            .then(res=>{
             console.log(res)
             if(res.success){
                 
@@ -142,7 +143,7 @@ const Collectionpage:React.FC=()=>{
                     <div className="all-collections row">
                         {collections == null ? (<h3>nothing matches your filtering</h3>):(
                             collections.map(collection=>(
-                                <CollectionCard key={collection._id} _id={collection._id} img={collection.img1??collection.img2??collection.img3??collection.img4} name={collection.name} price={collection.price}/>
+                                <CollectionCard discount={discount} key={collection._id} _id={collection._id} img={collection.img1??collection.img2??collection.img3??collection.img4} name={collection.name} price={collection.price}/>
                             ))
                         )}
 

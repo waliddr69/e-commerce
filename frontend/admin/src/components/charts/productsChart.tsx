@@ -5,6 +5,7 @@ import { BarChart } from "@mui/x-charts/BarChart";
 
 
 
+
 const chartSetting = {
   yAxis: [
     {
@@ -22,14 +23,15 @@ type params = {
 }
 
 export default function ProductChart({rows}:params) {
- console.log(rows)
+ 
 
   return (
-    <div style={{ width: "100%" }}>
+    <div style={{ width: "100%",backgroundColor:"#f4f2f2",borderRadius:8 }}>
       
       <BarChart
         dataset={rows}
         xAxis={[{ dataKey: "name" }]}
+        
         {...chartSetting}
       />
     </div>

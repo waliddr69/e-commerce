@@ -9,7 +9,7 @@ const Subscription:React.FC = ()=>{
                     <h2 style={{fontWeight:"bold"}}>Subscribe now &  get 20% off</h2>
                 </div>
                 <div className="subscription-paragraph">
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi, consequatur? Tempora nobis eos eum deleniti.</p>
+                    <p style={{textAlign:"center"}}>Join our newsletter to stay updated with the latest fashion trends, exclusive offers, and new arrivals. Subscribers get 20% off their first purchase and early access to sales.</p>
                 </div>
 
                 <form action="" className="input-group">

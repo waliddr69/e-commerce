@@ -10,6 +10,8 @@ const SearchPage:React.FC = ()=>{
     const query = new URLSearchParams(useLocation().search)
     const {id} = useContext(AuthContext) as any
     const {ws} = useWS() as any
+    const {discount} = useContext(AuthContext) as any
+    
     const [results,setResult] = useState<Product[] | null>(null)
     const q = query.get("q")||"";
     useEffect(()=>{
@@ -52,7 +54,7 @@ const SearchPage:React.FC = ()=>{
                 <>
                 <div className="row mt-5 w-50">
                 {results.map(result=>(
-                    <CollectionCard _id={result._id} img={result.img1??result.img2??result.img3??result.img4} price={result.price} name={result.name} key={result._id}/>
+                    <CollectionCard discount={discount} _id={result._id} img={result.img1??result.img2??result.img3??result.img4} price={result.price} name={result.name} key={result._id}/>
                 ))}
             </div>
                 </>

@@ -188,7 +188,7 @@ nav .nav-wrapper ul li a.active{
 }
 
 .hero .hero-img{
-    background-image: url("./assets/averie-woodard-4nulm-JUYFo-unsplash.jpg");
+    background-image: url("./assets/rayul-_M6gy9oHgII-unsplash.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -206,6 +206,20 @@ nav .nav-wrapper ul li a.active{
     flex-direction: column;
     gap: 52.43px;
 
+}
+
+.discount{
+    position: relative;
+}
+.discount::after{
+    content: "";
+    display: block;
+    width: 100%;
+    height: 2px;
+    position: absolute;
+    top: 50%;
+    background-color: black;
+    color: black;
 }
 
 .collection-wrapper .collection-head{

@@ -36,3 +36,4 @@ async def start_server():
     async with serve(handle_events, "localhost", 4000) as server:
         await server.serve_forever()
         await asyncio.Future()
+        

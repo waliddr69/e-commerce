@@ -32,7 +32,8 @@ const userSchema = mongo.Schema({
   avatar: {
     type: String,
   },
-  region:String
+  region:String,
+  discount:Number
 }, { timestamps: true });
 
 module.exports =  mongo.model("User", userSchema);

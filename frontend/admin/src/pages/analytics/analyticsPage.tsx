@@ -4,10 +4,11 @@ import { Product } from "../../models/productModel";
 import "./analytics.css"
 import UsersTable from "../../components/charts/usersTable";
 import ProductChart from "../../components/charts/productsChart";
+import RegionChart from "../../components/charts/pieChart";
 
 type params = {
     _id:string,
-
+    city:string
     products:[
         {
             productId:Product,
@@ -25,7 +26,8 @@ type params = {
     userId:{
       _id:string,
       username:string,
-      avatar:string
+      avatar:string,
+      discount?:number
     }
     items:number,
     method:string,
@@ -38,7 +40,8 @@ type params = {
 const AnalyticsPage: React.FC = () => {
   
   const [data,setData] = useState<Array<{date:string,value:number}>>([])
-  const [table,setTable] = useState<Array<{name:string,avatar:string,numOrders:number,products:string[]}>>([])
+  const [pie,setPie] = useState<Array<{label:string,value:number}>>([])
+  const [table,setTable] = useState<Array<{clientId:string,name:string,avatar:string,numOrders:number,products:string[],discount?:number}>>([])
   const [maxClient,setMaxClient] = useState("")
   const [maxPro,setMaxPro] = useState("")
   const [avatar,setAvatar] = useState("")
@@ -48,7 +51,7 @@ const AnalyticsPage: React.FC = () => {
       credentials:"include"
     })
     const res = await req.json()
-    console.log(res)
+   
     
     let ordersMap:Record<string,number> = {}
     const tableMap: Record<string, {
@@ -56,17 +59,25 @@ const AnalyticsPage: React.FC = () => {
       avatar: string;
       numOrders: number;
       products: string[];
+      discount?:number
     }> = {};
+
+
     const productMap: Record<string, {
       name: string;
       orders:number
     }> = {};
+
+    const regionMap: Record<string,number> = {}
+
+
     res.orders.map((r:params)=>{
+      
       const date = new Date(r.createdAt).toISOString().split('T')[0]
       if(ordersMap[date]){
-        ordersMap[date]++
+        ordersMap[date]+=r.products.length
       }else{
-        ordersMap[date]=1
+        ordersMap[date]=r.products.length
       }
 
       const userId = r.userId._id
@@ -79,7 +90,8 @@ const AnalyticsPage: React.FC = () => {
           name: r.userId.username,
           avatar: r.userId.avatar,
           numOrders: r.products.length,
-          products: r.products.map(p=>p.productId.name!)
+          products: r.products.map(p=>p.productId.name!),
+          discount: r.userId.discount
         }
       }
       r.products.map(p=>{
@@ -93,21 +105,35 @@ const AnalyticsPage: React.FC = () => {
           }
         }
       })
+
+      const region = r.city.substring(0,1).toUpperCase() + r.city.substring(1)
+      if(regionMap[region]){
+        regionMap[region]+=1
+      }else{
+        regionMap[region] = 1
+      }
       
     })
+
+   
     let max = 0;
-    Object.entries(tableMap).forEach(([_key,e])=>{
+    Object.entries(tableMap).forEach(([key,e])=>{
       if(e.products.length>max){
         max = e.products.length
         setMaxClient(e.name)
         setAvatar(e.avatar)
       }
-      setTable(prev=>[...prev,{name:e.name,avatar:e.avatar,numOrders:e.products.length,products:e.products}])
+      setTable(prev=>[...prev,{clientId:key,name:e.name,avatar:e.avatar,numOrders:e.products.length,products:e.products,discount:e.discount}])
     })
     
     Object.entries(ordersMap).forEach(([key,value])=>{
       const data = { date: key, value: value };
       setData(prev=>[...prev,data])
+    })
+
+    Object.entries(regionMap).forEach(([key,value])=>{
+      const data = { label: key, value:value };
+      setPie(prev=>[...prev,data])
     })
     let maxPro = 0;
     Object.entries(productMap).forEach(([_key,value])=>{
@@ -166,6 +192,8 @@ const AnalyticsPage: React.FC = () => {
       <UsersTable rows={table}/>
       <h2>Product performance</h2>
       <ProductChart rows={products}/>
+      <h2>Region</h2>
+      <RegionChart data={pie}/>
     </div>
 
   );

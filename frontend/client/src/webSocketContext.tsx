@@ -32,9 +32,10 @@ export const WSProvider = ({ children }: { children: ReactNode }) => {
       
     };
     socket.onmessage = (event)=>{
-        console.log("Received message:", event.data);
+        
         if(JSON.parse(event.data)){
           const data = JSON.parse(event.data);
+          console.log("Received message:", data);
           setMessage(data);
         }
       }

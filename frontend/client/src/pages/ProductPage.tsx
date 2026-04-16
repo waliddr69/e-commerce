@@ -26,6 +26,7 @@ const ProductPage: React.FC<RouteComponentProps<params>> = ({ match }) => {
 
     const {ws} = useWS() as any
     const {id} = useContext(AuthContext) as any
+    const {discount} = useContext(AuthContext) as any
    
     const [col,setcol] = useState<Product|null>(null)
     const auth = useContext(AuthContext)
@@ -106,7 +107,7 @@ const ProductPage: React.FC<RouteComponentProps<params>> = ({ match }) => {
         const form = e.currentTarget as HTMLFormElement
         const formData = new FormData(form)
         const size = formData.get("size")
-        console.log(process.env.REACT_APP_API_CART_URL)
+       
         if(auth?.avatar !== null){
             
             fetch(process.env.REACT_APP_API_CART_URL as string+"/add",{
@@ -126,8 +127,6 @@ const ProductPage: React.FC<RouteComponentProps<params>> = ({ match }) => {
                 if(res.success){
                     
                     card?.refreshItems()
-                }else{
-                    
                 }
             })
             .catch(err=>console.log(err))
@@ -194,8 +193,16 @@ const getReviews = ()=>{
                 <div className="product-text">
                     <h3 style={{fontWeight:"600"}}>{col.name}</h3>
                     <p>{numRev} reviews</p><br />
-
-                    <h2 style={{fontWeight:"bold"}}>{col.price} DZD</h2>
+                    {discount ? (
+                        <>
+                        <h2 className="discount" style={{fontWeight:"bold",color:"#00000036",width:"fit-content"}}>{col.price} DZD</h2>
+                        <h2 style={{ fontWeight: "bold" }}>{col.price! - ((discount * col.price!) / 100)} DZD</h2>
+                        <span style={{backgroundColor:"red",borderRadius:"50%",color:"white",padding:5}}>{discount}%</span>
+                        </>
+                    ):(
+                        <h2 style={{fontWeight:"bold"}}>{col.price} DZD</h2>
+                    )}
+                    
 
                     <p style={{color:"#838383"}}>{col.description} </p>
 
@@ -273,7 +280,7 @@ const getReviews = ()=>{
                             <h3>No Related Content</h3>
                         ):(
                             collections.map(collection=>(
-                                <CollectionCard _id={collection._id} price={collection.price} name={collection.name} key={collection._id} img={collection.img1??collection.img2??collection.img3??collection.img4} />
+                                <CollectionCard discount={discount} _id={collection._id} price={collection.price} name={collection.name} key={collection._id} img={collection.img1??collection.img2??collection.img3??collection.img4} />
                             ))
                         )}
                     

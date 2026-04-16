@@ -172,8 +172,30 @@ const getUser = asyncHandler(async(req,res)=>{
         res.status(404).json({success:false,message:"User not found"})
         
     }
-    res.json({success:true,name:user.username,avatar:user.avatar,id:user._id})
+    res.json({success:true,name:user.username,avatar:user.avatar,id:user._id,discount:user.discount})
 })
+
+const addDiscount = asyncHandler(async (req, res) => {
+    const {clientId,value} = req.body
+    console.log(value)
+    const discount = await User.updateOne({
+        _id:clientId,
+       
+    },{
+        $set:{discount:value}
+    },{
+        upsert:true
+    })
+
+    if(!discount.acknowledged){
+        res.status(400).json({success:false})
+        return
+    }
+
+    res.status(200).json({success:true})
+
+})
+
 
 const handleLogout = asyncHandler(async(req,res)=>{
     const userId = req.user.userId;
@@ -194,6 +216,6 @@ const handleLogout = asyncHandler(async(req,res)=>{
 
 
 
-module.exports = { registerUser, loginUser, getUser, handleLogout };
+module.exports = { registerUser, loginUser, getUser, handleLogout, addDiscount };
 
 

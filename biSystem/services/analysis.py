@@ -38,7 +38,7 @@ def content_based_recommendation_clicks(product_id,similarity):
     #results = [var.product_ids[i] for i in range(len(similarity[index])) if i!=index and similarity[index][i]>=0.6]
     for i in range(len(similarity[index])):
         
-        if i != index and similarity[index][i] >= 0.6:
+        if similarity[index][i] >= 0.6:
             results.append(var.product_ids[i])
     
     return results
